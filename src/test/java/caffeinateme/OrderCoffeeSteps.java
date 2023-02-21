@@ -4,27 +4,30 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class OrderCoffeeSteps {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 
+public class OrderCoffeeSteps {
+    Customer cathy = new Customer();
+    Barrista barry = new Barrista();
+    String cathysOrder;
     @Given("Cathy is {int} meters from the coffee shop")
     public void cathy_is_n_meters_from_the_coffee_shop(int distanceInMeters) throws Throwable {
-       Customer cathy = new Customer();
        cathy.setDistanceFromShop(distanceInMeters);
     }
-    @When("Cathy orders a large cappuccino")
-    public void cathy_orders_a_large_cappuccino() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @When("Cathy orders a (.*)$")
+    public void cathy_orders_a(String order) throws  Throwable {
+        cathysOrder = order;
+        cathy.placesOrderFor(cathysOrder);
     }
     @Then("Barry should see the order")
     public void barry_should_see_the_order() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        assertThat(barry.getPendingOrders(), hasItem(cathysOrder));
     }
     @Then("Barry should know that the coffee is urgent")
     public void barry_should_know_that_the_coffee_is_urgent() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+       assertThat(barry.getUrgentOrders(), hasItem(cathysOrder));
     }
 
 }

@@ -6,4 +6,7 @@ public class Customer {
     public void setDistanceFromShop(int distanceFromShop) {
         this.distanceFromShop= distanceFromShop;
     }
+
+    public void placesOrderFor(String order) {
+    }
 }
